@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="gridmaker.css">
+</head>
+<body>
+    <h1>Acme Grid Maker</h1>
+    <form action="">
+        <input type="number" id="rows" placeholder="rows" value = "" >
+        <input type="number" id="columns" placeholder="columns" value = "">
+        <button>Make Grid</button>
+    </form>
+
+    <div id="gridContainer">
+
+    </div>
+    <script>
+    
+        // const rowValue = document.getElementById("rows").value; due to scope ???? 
+        // const columnValue = document.getElementById("columns").value;
+        const gridContainer = document.getElementById('gridContainer');
+
+        const addGrid = () => {
+            const rowValue = document.getElementById("rows").value; 
+            const columnValue = document.getElementById("columns").value;
+
+            for(let i = 0; i < rowValue; i++){
+                let row = document.createElement('div');
+                row.className = 'row';
+                gridContainer.appendChild(row);
+
+                for(let j = 0; j<columnValue;j++){
+                    let box = document.createElement('div');
+                    box.className ='box';
+                    row.append(box)
+                }
+                gridContainer.appendChild(row)
+            }
+        }
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (ev) => {
+            ev.preventDefault();
+            addGrid ();
+        });
+
+        //need to finish this!
+        // need to add warning alert , toggllinge color to blue,  and the location settings of the x and y cordinates 
+
+
+    </script>
+</body>
+</html>
