@@ -10,46 +10,75 @@
     <h1>Acme Grid Maker</h1>
     <form action="">
         <input type="number" id="rows" placeholder="rows" value = "" >
+            <div id ="error-row" class="error"></div>
         <input type="number" id="columns" placeholder="columns" value = "">
-        <button>Make Grid</button>
+            <div id="error-column" class="error"></div>
+        <button type="submit">Make Grid</button>
     </form>
 
     <div id="gridContainer">
 
     </div>
+
+    <div id = "axis"> </div>
+
+
     <script>
     
-        // const rowValue = document.getElementById("rows").value; due to scope ???? 
-        // const columnValue = document.getElementById("columns").value;
+        const rowInput = document.getElementById("rows");
+        const columnInput = document.getElementById("columns");
         const gridContainer = document.getElementById('gridContainer');
+        const errorMessageRow = document.getElementById('error-row');
 
+        const errorMessageColumn = document.getElementById('error-column');
+        const axis = document.getElementById('axis')
+
+        let submit = true;
+        
         const addGrid = () => {
-            const rowValue = document.getElementById("rows").value; 
-            const columnValue = document.getElementById("columns").value;
-
-            for(let i = 0; i < rowValue; i++){
+            while(gridContainer.firstChild) {
+                gridContainer.removeChild(gridContainer.firstChild);
+            };//condition statement to remove the reset the grid and remove all the child nodes
+                for(let i = 0; i < rowInput.value; i++){
                 let row = document.createElement('div');
-                row.className = 'row';
+                row.id = i;
+                row.classList.add('rowbox')
                 gridContainer.appendChild(row);
 
-                for(let j = 0; j<columnValue;j++){
-                    let box = document.createElement('div');
-                    box.className ='box';
-                    row.append(box)
-                }
-                gridContainer.appendChild(row)
-            }
-        }
+                for(let j = 0; j<columnInput.value;j++){
+                    let column = document.createElement('div');
+                    column.id = j;
+                    column.classList.add('columnbox');
+                    row.append(column)
+                };
+            gridContainer.appendChild(row);
+            };
+        };
 
         const form = document.querySelector('form');
         form.addEventListener('submit', (ev) => {
-            ev.preventDefault();
-            addGrid ();
+
+                if(rowInput.value > 50){
+                    errorMessageRow.innerText = 'rows must be between 1 and 50'
+                    ev.preventDefault();
+                }
+                if(columnInput.value > 50){
+                    errorMessageColumn.innerText = 'columns must be between 1 and 50'
+                    ev.preventDefault();
+                }
+                else{
+                    addGrid ();
+                    ev.preventDefault();
+                }
         });
 
-        //need to finish this!
-        // need to add warning alert , toggllinge color to blue,  and the location settings of the x and y cordinates 
+        gridContainer.addEventListener('click',(ev)=>{
+            if(ev.target.tagName === 'DIV'){
+                ev.target.classList.toggle('changeColor');
 
+                axis.innerText = `rIdx:${1} cIdx:${1}`
+            }
+        })
 
     </script>
 </body>
